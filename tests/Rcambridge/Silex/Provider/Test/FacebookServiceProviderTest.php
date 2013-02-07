@@ -1,10 +1,10 @@
 <?php
 
-namespace Tobiassjosten\Silex\Provider\Test;
+namespace Rcambridge\Silex\Provider\Test;
 
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
-use Tobiassjosten\Silex\Provider\FacebookServiceProvider;
+use Rcambridge\Silex\Provider\FacebookServiceProvider;
 
 class FacebookServiceProviderTest extends \PHPUnit_Framework_TestCase
 {

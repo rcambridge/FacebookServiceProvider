@@ -13,7 +13,7 @@
 >
     <testsuites>
         <testsuite name="FacebookServiceProvider Test Suite">
-            <directory>./tests/Tobiassjosten</directory>
+            <directory>./tests/Rcambridge</directory>
         </testsuite>
     </testsuites>
 </phpunit>

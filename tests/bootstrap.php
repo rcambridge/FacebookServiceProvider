@@ -14,4 +14,4 @@ if ((!$loader = includeIfExists(__DIR__.'/../vendor/autoload.php'))
         'php composer.phar install'.PHP_EOL);
 }
 
-$loader->add('Tobiassjosten\Silex\Provider\Test', __DIR__);
+$loader->add('Rcambridge\Silex\Provider\Test', __DIR__);

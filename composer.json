@@ -1,9 +1,14 @@
 {
-    "name": "tobiassjosten/facebook-service-provider",
+    "name": "rcambridge/facebook-service-provider",
     "description": "Silex ServiceProvider for the Facebook SDK",
     "keywords": ["silex", "service-provider", "facebook", "sdk"],
     "license": "MPL-2.0",
     "authors": [
+        {
+            "name": "Robert Cambridge",
+            "email": "robert@boxlightmedia.com",
+            "homepage": "http://boxlightmedia.com/"
+        },
         {
             "name": "Tobias Sjösten",
             "email": "tobias.sjosten@gmail.com",
@@ -17,7 +22,7 @@
     },
     "autoload": {
         "psr-0": {
-            "Tobiassjosten\\Silex\\Provider": "lib"
+            "Rcambridge\\Silex\\Provider": "lib"
         }
     },
     "minimum-stability": "dev"
