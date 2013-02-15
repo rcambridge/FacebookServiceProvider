@@ -154,9 +154,6 @@ class Facebook extends \BaseFacebook
 EOT;
 
     public function fql($queries = array()) {
-        throw new \Exception('this has not been tested yet!');
-        var_dump($queries, '/fql?q=' . rawurlencode(json_encode($queries)));die();
-
         $responses = $this->api('/fql?q=' . rawurlencode(json_encode($queries)));
 
         $retval = array();
