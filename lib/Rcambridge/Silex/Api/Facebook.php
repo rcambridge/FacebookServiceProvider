@@ -27,7 +27,7 @@ EOT;
     protected static $kSupportedKeys =
         array('state', 'code', 'access_token', 'user_id', 'original_signed_request');
 
-    protected $request;
+    protected $app;
 
     /**
     * Identical to the parent constructor, except that
@@ -42,9 +42,10 @@ EOT;
     * @see BaseFacebook::__construct in facebook.php
     */
     public function __construct($config) {
-        if (!session_id()) {
-            session_start();
-        }
+        $this->app = $config['app'];
+
+        $this->app['session']->start();
+
         parent::__construct($config);
         if (!empty($config['sharedSession'])) {
             $this->initSharedSession();
@@ -103,7 +104,8 @@ EOT;
         }
 
         $session_var_name = $this->constructSessionVariableName($key);
-        $_SESSION[$session_var_name] = $value;
+        // $_SESSION[$session_var_name] = $value;
+        $this->app['session']->set($session_var_name, $value);
     }
 
     protected function getPersistentData($key, $default = false) {
@@ -113,8 +115,10 @@ EOT;
         }
 
         $session_var_name = $this->constructSessionVariableName($key);
-        return isset($_SESSION[$session_var_name]) ?
-            $_SESSION[$session_var_name] : $default;
+        // return isset($_SESSION[$session_var_name]) ?
+        //     $_SESSION[$session_var_name] : $default;
+
+        return $this->app['session']->get($session_var_name, $default);
     }
 
     protected function clearPersistentData($key) {
@@ -124,7 +128,9 @@ EOT;
         }
 
         $session_var_name = $this->constructSessionVariableName($key);
-        unset($_SESSION[$session_var_name]);
+        // unset($_SESSION[$session_var_name]);
+
+        return $this->app['session']->remove($session_var_name);
     }
 
     protected function clearAllPersistentData() {

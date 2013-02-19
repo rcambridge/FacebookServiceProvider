@@ -19,6 +19,7 @@ class FacebookServiceProvider implements ServiceProviderInterface
             return new Facebook(array(
                 'appId'  => $app['facebook.app_id'],
                 'secret' => $app['facebook.secret'],
+                'app'    => $app,
             ));
         });
     }
