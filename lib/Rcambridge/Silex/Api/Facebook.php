@@ -34,16 +34,13 @@ EOT;
 
         $this->app['session']->start();
 
-      // extends the supported keys to the signed requesst to the persistent data
-      self::$kSupportedKeys = array_merge(parent::$kSupportedKeys, array('original_signed_request'));
+        // extends the supported keys to the signed requesst to the persistent data
+        self::$kSupportedKeys = array_merge(parent::$kSupportedKeys, array('post_signed_request'));
 
         parent::__construct($config);
 
-        // this must be done before getOriginalSignedRequest()
-        $this->getUser();
-
-        // cache the signed request if it's available
-        $this->getOriginalSignedRequest();
+        // cache the signed request which is provided by Facebook's POST if it's available
+        $this->getPostSignedRequest();
     }
 
     protected function setPersistentData($key, $value) {
@@ -84,7 +81,11 @@ EOT;
 
     protected function clearAllPersistentData() {
         foreach (self::$kSupportedKeys as $key) {
-            $this->clearPersistentData($key);
+            // keep the post_signed_request as it we won't get a chance to recover it later
+            if ($key != 'post_signed_request')
+            {
+                $this->clearPersistentData($key);
+            }
         }
         if ($this->sharedSessionID) {
             $this->deleteSharedSessionCookie();
@@ -128,23 +129,13 @@ EOT;
     *
     * @return array with the signed request or null
     */
-    public function getOriginalSignedRequest()
+    public function getPostSignedRequest()
     {
-        if (isset($_REQUEST['signed_request']) || !$this->getPersistentData('original_signed_request'))
+        if (!empty($_REQUEST['signed_request']) && $this->getSignedRequest())
         {
-            $this->setPersistentData('original_signed_request', $this->getSignedRequest());
+            $this->setPersistentData('post_signed_request', $this->getSignedRequest());
         }
 
-        return $this->getPersistentData('original_signed_request');
-    }
-
-    /**
-    * Provides merged signed request + original signed request
-    *
-    * @return array with the signed request or null
-    */
-    public function getMergedSignedRequest()
-    {
-        return array_merge(is_array($osr = $this->getOriginalSignedRequest()) ? $osr : array(), is_array($sr = $this->getSignedRequest()) ? $sr : array());
+        return $this->getPersistentData('post_signed_request');
     }
 }
