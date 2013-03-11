@@ -138,4 +138,9 @@ EOT;
 
         return $this->getPersistentData('post_signed_request');
     }
+
+    public function getApplicationAccessToken()
+    {
+      return parent::getApplicationAccessToken();
+    }
 }
